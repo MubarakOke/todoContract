@@ -23,11 +23,53 @@ import {
         const title= "test title";
         const description= "test description";
 
-        const tx= await toDo.createTodo(title, description)
+        await toDo.createTodo(title, description)
         const returnedTodo= await toDo.getTodo(0)
 
         expect(returnedTodo[2]).to.equal(title);
         expect(returnedTodo[3]).to.equal(description);
+      });
+
+      it("Should update title", async function () {
+        const { toDo } = await loadFixture(deployToDo);
+        const title= "test title";
+        const description= "test description";
+
+        await toDo.createTodo(title, description);
+
+        const newTitle= "test title 2";
+        await toDo.updateTitle(0, newTitle)
+
+        const returnedTodo= await toDo.getTodo(0)
+        expect(returnedTodo[2]).to.equal(newTitle);
+      });
+
+      it("Should update description", async function () {
+        const { toDo } = await loadFixture(deployToDo);
+        const title= "test title";
+        const description= "test description";
+
+        await toDo.createTodo(title, description);
+
+        const newDescription= "test description 2";
+        await toDo.updateTitle(0, newDescription)
+
+        const returnedTodo= await toDo.getTodo(0)
+        expect(returnedTodo[2]).to.equal(newDescription);
+      });
+
+      it("Should delete todo", async function () {
+        const { toDo } = await loadFixture(deployToDo);
+        const title= "test title";
+        const description= "test description";
+
+        await toDo.createTodo(title, description);
+
+        const newDescription= "test description 2";
+        await toDo.deleteTodo(0)
+
+        const returnedTodos= await toDo.getTodoAll()
+        expect(returnedTodos.length).to.equal(0);
       });
     });
   });
