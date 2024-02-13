@@ -64,8 +64,9 @@ import {
         const description= "test description";
 
         await toDo.createTodo(title, description);
+        const returnedTodo= await toDo.getTodo(0)
 
-        const newDescription= "test description 2";
+        expect(returnedTodo[2]).to.equal(title);
         await toDo.deleteTodo(0)
 
         const returnedTodos= await toDo.getTodoAll()
